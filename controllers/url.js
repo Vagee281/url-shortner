@@ -11,7 +11,8 @@ async function generateNewShortUrlHandler(req, res) {
     visitHistory: [],
   });
 
-  return res.status(201).json({ msg: short });
+  // return res.status(201).json({ msg: short });
+  return res.render("home", { id: short });
 }
 
 async function getRedirectedHandler(req, res) {
@@ -51,9 +52,18 @@ async function getAnalyticsHandler(req, res) {
   });
 }
 
+async function getPageHandler(req, res) {
+  const users = await urlModel.find({});
+
+  return res.status(200).render("home", {
+    users: users,
+  });
+}
+
 module.exports = {
   generateNewShortUrlHandler,
   getRedirectedHandler,
   getAllUsers,
   getAnalyticsHandler,
+  getPageHandler,
 };
